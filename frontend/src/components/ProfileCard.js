@@ -9,15 +9,12 @@ const ProfileCard = (props) => {
   const showEditButton = props.isEditable && !props.inEditMode;
 
   return (
-    <div className="card">
+    <div className="card" style={{ }}>
       <div className="card-header text-center">
         <ProfileImage
-          alt="profile"
-          width="200"
-          height="200"
           image={image}
           src={props.loadedImage}
-          className="rounded-circle shadow"
+          style={{ width: 300, height: 300, marginLeft: 100 }}
         />
       </div>
       <div className="card-body text-center">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as apiCalls from '../api/apiCalls';
 import Spinner from './Spinner';
-import HoaxView from './HoaxView';
+import MessageContainer from './MessageContainer';
 import Modal from './Modal';
 
 const HoaxFeed = (props) => {
@@ -132,9 +132,9 @@ const HoaxFeed = (props) => {
       )}
       {page.content.map((hoax) => {
         return (
-          <HoaxView
+          <MessageContainer
             key={hoax.id}
-            hoax={hoax}
+            message={hoax}
             onClickDelete={() => setHoaxToBeDeleted(hoax)}
           />
         );

@@ -14,7 +14,9 @@ class HomePage extends React.Component {
       <div data-testid="homepage">
         <div className="row">
           <div className="col-8">
-            {this.props.loggedInUser.isLoggedIn && <MessageSubmit />}
+            {this.props.loggedInUser.isLoggedIn && (
+              <MessageSubmit />
+            )}
             <HoaxFeed />
           </div>
           <div className="col-4">

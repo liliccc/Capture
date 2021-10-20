@@ -64,15 +64,11 @@ const TopBar = (props) => {
         >
           <MenuItem>
             <Link to={`/${props.user.username}`}>
-              <i
-                className="fas fa-user text-info"
-              ></i>{' '}
               My Profile
             </Link>
           </MenuItem>
           <MenuItem>
-            <span onClick={onClickLogout}>
-              <i className="fas fa-sign-out-alt text-danger"></i> Logout
+            <span onClick={onClickLogout}>Logout
             </span>
           </MenuItem>
         </Menu>

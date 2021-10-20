@@ -66,7 +66,7 @@ class MessageSubmit extends Component {
       textAreaClassName += ' is-invalid';
     }
     return (
-      <Card>
+      <Card style={{ marginBottom: 20, marginTop: 10 }}>
         <CardContent>
           <div className="row">
             <ProfileImage
@@ -88,7 +88,7 @@ class MessageSubmit extends Component {
               </span>
             )}
             {this.state.focused && (
-              <div style={{marginTop: 20}}>
+              <div style={{ marginTop: 20 }}>
                 <div className="text-right mt-1">
                   <ButtonWithProgress
                     disabled={this.state.pendingApiCall}
