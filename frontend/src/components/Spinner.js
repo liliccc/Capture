@@ -1,13 +1,8 @@
 import React from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Spinner = () => {
-  return (
-    <div className="d-flex">
-      <div className="spinner-border text-black-50 m-auto">
-        <span className="sr-only">Loading...</span>
-      </div>
-    </div>
-  );
+  return <CircularProgress color="success" />;
 };
 
 export default Spinner;
