@@ -35,14 +35,14 @@ export const postHoax = (hoax) => {
   return axios.post('/api/1.0/hoaxes', hoax);
 };
 
-export const loadHoaxes = (username) => {
+export const loadMessages = (username) => {
   const basePath = username
     ? `/api/1.0/users/${username}/hoaxes`
     : '/api/1.0/hoaxes';
   return axios.get(basePath + '?page=0&size=5&sort=id,desc');
 };
 
-export const loadOldHoaxes = (hoaxId, username) => {
+export const loadOldMessages = (hoaxId, username) => {
   const basePath = username
     ? `/api/1.0/users/${username}/hoaxes`
     : '/api/1.0/hoaxes';
@@ -50,7 +50,7 @@ export const loadOldHoaxes = (hoaxId, username) => {
   return axios.get(path);
 };
 
-export const loadNewHoaxes = (hoaxId, username) => {
+export const loadNewMessages = (hoaxId, username) => {
   const basePath = username
     ? `/api/1.0/users/${username}/hoaxes`
     : '/api/1.0/hoaxes';

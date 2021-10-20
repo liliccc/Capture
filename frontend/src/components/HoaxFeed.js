@@ -6,30 +6,30 @@ import Modal from './Modal';
 
 const HoaxFeed = (props) => {
   const [page, setPage] = useState({ content: [] });
-  const [isLoadingHoaxes, setLoadingHoaxes] = useState(false);
-  const [isLoadingOldHoaxes, setLoadingOldHoaxes] = useState(false);
-  const [isLoadingNewHoaxes, setLoadingNewHoaxes] = useState(false);
+  const [isLoadingMessages, setLoadingMessages] = useState(false);
+  const [isLoadingOldMessages, setLoadingOldMessages] = useState(false);
+  const [isLoadingNewMessages, setLoadingNewMessages] = useState(false);
   const [isDeletingHoax, setDeletingHoax] = useState(false);
   const [newHoaxCount, setNewHoaxCount] = useState(0);
   const [hoaxToBeDeleted, setHoaxToBeDeleted] = useState();
 
   useEffect(() => {
-    const loadHoaxes = () => {
-      setLoadingHoaxes(true);
-      apiCalls.loadHoaxes(props.user).then((response) => {
-        setLoadingHoaxes(false);
+    const loadMessages = () => {
+      setLoadingMessages(true);
+      apiCalls.loadMessages(props.user).then((response) => {
+        setLoadingMessages(false);
         setPage(response.data);
       });
     };
-    loadHoaxes();
+    loadMessages();
   }, [props.user]);
 
   useEffect(() => {
     const checkCount = () => {
-      const hoaxes = page.content;
+      const Messages = page.content;
       let topHoaxId = 0;
-      if (hoaxes.length > 0) {
-        topHoaxId = hoaxes[0].id;
+      if (Messages.length > 0) {
+        topHoaxId = Messages[0].id;
       }
       apiCalls.loadNewHoaxCount(topHoaxId, props.user).then((response) => {
         setNewHoaxCount(response.data.count);
@@ -42,52 +42,52 @@ const HoaxFeed = (props) => {
   }, [props.user, page.content]);
 
   const onClickLoadMore = () => {
-    if (isLoadingOldHoaxes) {
+    if (isLoadingOldMessages) {
       return;
     }
-    const hoaxes = page.content;
-    if (hoaxes.length === 0) {
+    const Messages = page.content;
+    if (Messages.length === 0) {
       return;
     }
-    const hoaxAtBottom = hoaxes[hoaxes.length - 1];
-    setLoadingOldHoaxes(true);
+    const hoaxAtBottom = Messages[Messages.length - 1];
+    setLoadingOldMessages(true);
     apiCalls
-      .loadOldHoaxes(hoaxAtBottom.id, props.user)
+      .loadOldMessages(hoaxAtBottom.id, props.user)
       .then((response) => {
         setPage((previousPage) => ({
           ...previousPage,
           last: response.data.last,
           content: [...previousPage.content, ...response.data.content],
         }));
-        setLoadingOldHoaxes(false);
+        setLoadingOldMessages(false);
       })
       .catch((error) => {
-        setLoadingOldHoaxes(false);
+        setLoadingOldMessages(false);
       });
   };
 
   const onClickLoadNew = () => {
-    if (isLoadingNewHoaxes) {
+    if (isLoadingNewMessages) {
       return;
     }
-    const hoaxes = page.content;
+    const Messages = page.content;
     let topHoaxId = 0;
-    if (hoaxes.length > 0) {
-      topHoaxId = hoaxes[0].id;
+    if (Messages.length > 0) {
+      topHoaxId = Messages[0].id;
     }
-    setLoadingNewHoaxes(true);
+    setLoadingNewMessages(true);
     apiCalls
-      .loadNewHoaxes(topHoaxId, props.user)
+      .loadNewMessages(topHoaxId, props.user)
       .then((response) => {
         setPage((previousPage) => ({
           ...previousPage,
           content: [...response.data, ...previousPage.content],
         }));
-        setLoadingNewHoaxes(false);
+        setLoadingNewMessages(false);
         setNewHoaxCount(0);
       })
       .catch((error) => {
-        setLoadingNewHoaxes(false);
+        setLoadingNewMessages(false);
       });
   };
 
@@ -105,18 +105,18 @@ const HoaxFeed = (props) => {
     });
   };
 
-  if (isLoadingHoaxes) {
+  if (isLoadingMessages) {
     return <Spinner />;
   }
   if (page.content.length === 0 && newHoaxCount === 0) {
     return (
-      <div className="card card-header text-center">There are no hoaxes</div>
+      <div className="card card-header text-center">There are no Messages</div>
     );
   }
   const newHoaxCountMessage =
     newHoaxCount === 1
       ? 'There is 1 new hoax'
-      : `There are ${newHoaxCount} new hoaxes`;
+      : `There are ${newHoaxCount} new Messages`;
   return (
     <div>
       {newHoaxCount > 0 && (
@@ -124,10 +124,10 @@ const HoaxFeed = (props) => {
           className="card card-header text-center"
           onClick={onClickLoadNew}
           style={{
-            cursor: isLoadingNewHoaxes ? 'not-allowed' : 'pointer',
+            cursor: isLoadingNewMessages ? 'not-allowed' : 'pointer',
           }}
         >
-          {isLoadingNewHoaxes ? <Spinner /> : newHoaxCountMessage}
+          {isLoadingNewMessages ? <Spinner /> : newHoaxCountMessage}
         </div>
       )}
       {page.content.map((hoax) => {
@@ -144,10 +144,10 @@ const HoaxFeed = (props) => {
           className="card card-header text-center"
           onClick={onClickLoadMore}
           style={{
-            cursor: isLoadingOldHoaxes ? 'not-allowed' : 'pointer',
+            cursor: isLoadingOldMessages ? 'not-allowed' : 'pointer',
           }}
         >
-          {isLoadingOldHoaxes ? <Spinner /> : 'Load More'}
+          {isLoadingOldMessages ? <Spinner /> : 'Load More'}
         </div>
       )}
       <Modal

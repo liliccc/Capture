@@ -16,11 +16,9 @@ const TopBar = (props) => {
   const handleClick = (event) => {
     if (anchorEl == null) {
       setAnchorEl(event.currentTarget);
-    }
-    else {
+    } else {
       setAnchorEl(null);
     }
-
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -63,13 +61,10 @@ const TopBar = (props) => {
           }}
         >
           <MenuItem>
-            <Link to={`/${props.user.username}`}>
-              My Profile
-            </Link>
+            <Link to={`/${props.user.username}`}>My Profile</Link>
           </MenuItem>
           <MenuItem>
-            <span onClick={onClickLogout}>Logout
-            </span>
+            <span onClick={onClickLogout}>Logout</span>
           </MenuItem>
         </Menu>
       </Button>
