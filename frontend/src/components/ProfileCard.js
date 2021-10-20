@@ -2,6 +2,7 @@ import React from 'react';
 import ProfileImage from './ProfileImage';
 import Input from './Input';
 import ButtonWithProgress from './ButtonWithProgress';
+import Button from '@mui/material/Button';
 
 const ProfileCard = (props) => {
   const { displayName, username, image } = props.user;
@@ -9,7 +10,7 @@ const ProfileCard = (props) => {
   const showEditButton = props.isEditable && !props.inEditMode;
 
   return (
-    <div className="card" style={{ }}>
+    <div className="card" style={{}}>
       <div className="card-header text-center">
         <ProfileImage
           image={image}
@@ -18,7 +19,9 @@ const ProfileCard = (props) => {
         />
       </div>
       <div className="card-body text-center">
-        {!props.inEditMode && <h4>{`${displayName}@${username}`}</h4>}
+        {!props.inEditMode && (
+          <h4 style={{ color: '#00b894' }}>{`${displayName}@${username}`}</h4>
+        )}
         {props.inEditMode && (
           <div className="mb-2">
             <Input
@@ -28,23 +31,16 @@ const ProfileCard = (props) => {
               hasError={props.errors.displayName && true}
               error={props.errors.displayName}
             />
-            <div className="mt-2">
-              <Input
-                type="file"
-                onChange={props.onFileSelect}
-                hasError={props.errors.image && true}
-                error={props.errors.image}
-              />
-            </div>
           </div>
         )}
         {showEditButton && (
-          <button
-            className="btn btn-outline-success"
+          <Button
+            variant="contained"
+            style={{ backgroundColor: '#00b894' }}
             onClick={props.onClickEdit}
           >
-            <i className="fas fa-user-edit" /> Edit
-          </button>
+            Edit
+          </Button>
         )}
         {props.inEditMode && (
           <div>
@@ -59,13 +55,14 @@ const ProfileCard = (props) => {
               pendingApiCall={props.pendingUpdateCall}
               disabled={props.pendingUpdateCall}
             />
-            <button
-              className="btn btn-outline-secondary ml-1"
+            <Button
+              variant="contained"
+              style={{ backgroundColor: '#00b894' }}
               onClick={props.onClickCancel}
               disabled={props.pendingUpdateCall}
             >
-              <i className="fas fa-window-close" /> Cancel
-            </button>
+              Cancel
+            </Button>
           </div>
         )}
       </div>
