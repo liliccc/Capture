@@ -15,9 +15,6 @@ class MessageSubmit extends Component {
     content: undefined,
     pendingApiCall: false,
     errors: {},
-    file: undefined,
-    image: undefined,
-    attachment: undefined,
   };
 
   onChangeContent = (event) => {

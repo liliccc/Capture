@@ -32,7 +32,7 @@ export const updateUser = (userId, body) => {
 };
 
 export const postMessage = (Message) => {
-  return axios.post('/api/1.0/hoaxes', hoax);
+  return axios.post('/api/1.0/hoaxes', Message);
 };
 
 export const loadMessages = (username) => {
@@ -64,10 +64,6 @@ export const loadNewMessageCount = (MessageId, username) => {
     : '/api/1.0/hoaxes';
   const path = `${basePath}/${MessageId}?direction=after&count=true`;
   return axios.get(path);
-};
-
-export const postMessageFile = (file) => {
-  return axios.post('/api/1.0/Messagees/upload', file);
 };
 
 export const deleteMessage = (MessageId) => {
