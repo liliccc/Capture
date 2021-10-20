@@ -16,6 +16,22 @@ services:
     networks:
       - mynet
 
+  api2:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgresql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+    networks:
+      - mynet
+
   postgresql:
     image: postgres
     ports:
@@ -51,6 +67,7 @@ services:
       - ./frontend:/app
     depends_on:
       - api
+      - api2
     networks:
       - mynet
 

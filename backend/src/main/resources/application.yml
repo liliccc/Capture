@@ -19,6 +19,7 @@ spring:
         persistence:
           validation:
             mode: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 #    hibernate:
 #      ddl-auto: create # When you launch the application for the first time - switch "none" at "create"
