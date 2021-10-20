@@ -22,7 +22,7 @@ const UserList = (props) => {
 
   const loadData = (requestedPage = 0) => {
     apiCalls
-      .listUsers({ page: requestedPage, size: 8 })
+      .listUsers({ page: requestedPage, size: 5 })
       .then((response) => {
         setPage(response.data);
         setLoadError();
@@ -46,7 +46,7 @@ const UserList = (props) => {
     <Card>
       <CardContent>
         <h3 style={{ marginLeft: 120, color: '#00b894' }}>Users</h3>
-        <List data-testid="usergroup">
+        <List>
           {content.map((user) => {
             return <UserListItem key={user.username} user={user} />;
           })}

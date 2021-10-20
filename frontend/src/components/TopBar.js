@@ -50,7 +50,7 @@ const TopBar = (props) => {
         ref={actionArea}
       >
         <ProfileImage image={props.user.image} />
-        <span className="nav-link dropdown-toggle">
+        <span className="nav-link dropdown-toggle" style={{ color: '#00b894' }}>
           {props.user.displayName}
         </span>
         <Menu
@@ -64,7 +64,10 @@ const TopBar = (props) => {
         >
           <MenuItem>
             <Link to={`/${props.user.username}`}>
-              <i className="fas fa-user text-info"></i> My Profile
+              <i
+                className="fas fa-user text-info"
+              ></i>{' '}
+              My Profile
             </Link>
           </MenuItem>
           <MenuItem>
