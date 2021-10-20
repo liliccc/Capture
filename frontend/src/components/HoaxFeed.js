@@ -4,7 +4,7 @@ import Spinner from './Spinner';
 import MessageContainer from './MessageContainer';
 import Modal from './Modal';
 
-const HoaxFeed = (props) => {
+const MessagesPage = (props) => {
   const [page, setPage] = useState({ content: [] });
   const [isLoadingMessages, setLoadingMessages] = useState(false);
   const [isLoadingOldMessages, setLoadingOldMessages] = useState(false);
@@ -166,4 +166,4 @@ const HoaxFeed = (props) => {
   );
 };
 
-export default HoaxFeed;
+export default MessagesPage;
