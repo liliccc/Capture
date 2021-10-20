@@ -4,10 +4,27 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ProfileImage from './ProfileImage';
 import useClickTracker from '../shared/useClickTracker';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const TopBar = (props) => {
   const actionArea = useRef();
   const dropDownVisible = useClickTracker(actionArea);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    if (anchorEl == null) {
+      setAnchorEl(event.currentTarget);
+    }
+    else {
+      setAnchorEl(null);
+    }
+
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const onClickLogout = () => {
     const action = {
@@ -16,41 +33,47 @@ const TopBar = (props) => {
     props.dispatch(action);
   };
 
-  let links = (
-    <div></div>
-  );
+  let links = <div></div>;
   if (props.user.isLoggedIn) {
     let dropDownClass = 'p-0 shadow dropdown-menu';
     if (dropDownVisible) {
       dropDownClass += ' show';
     }
     links = (
-      <ul className="nav navbar-nav ml-auto" ref={actionArea}>
-        <li className="nav-item dropdown">
-          <div className="d-flex" style={{ cursor: 'pointer' }}>
-            <ProfileImage
-              image={props.user.image}
-            />
-            <span className="nav-link dropdown-toggle">
-              {props.user.displayName}
-            </span>
-          </div>
-          <div className={dropDownClass} data-testid="drop-down-menu">
-            <Link to={`/${props.user.username}`} className="dropdown-item">
+      <Button
+        id="basic-button"
+        aria-controls="basic-menu"
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        style={{ marginLeft: 700 }}
+        ref={actionArea}
+      >
+        <ProfileImage image={props.user.image} />
+        <span className="nav-link dropdown-toggle">
+          {props.user.displayName}
+        </span>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem>
+            <Link to={`/${props.user.username}`}>
               <i className="fas fa-user text-info"></i> My Profile
             </Link>
-            <span
-              className="dropdown-item"
-              onClick={onClickLogout}
-              style={{
-                cursor: 'pointer',
-              }}
-            >
+          </MenuItem>
+          <MenuItem>
+            <span onClick={onClickLogout}>
               <i className="fas fa-sign-out-alt text-danger"></i> Logout
             </span>
-          </div>
-        </li>
-      </ul>
+          </MenuItem>
+        </Menu>
+      </Button>
     );
   }
   return (
