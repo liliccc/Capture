@@ -23,23 +23,23 @@ public class MessageController {
 	@Autowired
 	MessageService messageService;
 
-	@PostMapping("/hoaxes")
+	@PostMapping("/msg")
 	MessageVM createMessage(@Valid @RequestBody Message message, @CurrentUser Users user) {
 		return new MessageVM(messageService.save(user, message));
 	}
 	
-	@GetMapping("/hoaxes")
+	@GetMapping("/msg")
 	Page<MessageVM> getAllMessages(Pageable pageable) {
 		return messageService.getAllMessages(pageable).map(MessageVM::new);
 	}
 	
-	@GetMapping("/users/{username}/hoaxes")
+	@GetMapping("/users/{username}/msg")
 	Page<MessageVM> getMessagesOfUser(@PathVariable String username, Pageable pageable) {
 		return messageService.getMessagesOfUser(username, pageable).map(MessageVM::new);
 		
 	}
 	
-	@GetMapping({"/hoaxes/{id:[0-9]+}", "/users/{username}/hoaxes/{id:[0-9]+}"}) 
+	@GetMapping({"/msg/{id:[0-9]+}", "/users/{username}/msg/{id:[0-9]+}"})
 	ResponseEntity<?> getMessagesRelative(@PathVariable long id,
 										  @PathVariable(required= false) String username,
 										  Pageable pageable,
@@ -60,7 +60,7 @@ public class MessageController {
 		return ResponseEntity.ok(newMessages);
 	}
 	
-	@DeleteMapping("/hoaxes/{id:[0-9]+}")
+	@DeleteMapping("/msg/{id:[0-9]+}")
 	@PreAuthorize("@messageSecurityService.isAllowedToDelete(#id, principal)")
 	GenericResponse deleteMessage(@PathVariable long id) {
 		messageService.deleteMessage(id);

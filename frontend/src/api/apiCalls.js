@@ -32,40 +32,40 @@ export const updateUser = (userId, body) => {
 };
 
 export const postMessage = (Message) => {
-  return axios.post('/api/1.0/hoaxes', Message);
+  return axios.post('/api/1.0/msg', Message);
 };
 
 export const loadMessages = (username) => {
   const basePath = username
-    ? `/api/1.0/users/${username}/hoaxes`
-    : '/api/1.0/hoaxes';
+    ? `/api/1.0/users/${username}/msg`
+    : '/api/1.0/msg';
   return axios.get(basePath + '?page=0&size=5&sort=id,desc');
 };
 
 export const loadOldMessages = (MessageId, username) => {
   const basePath = username
-    ? `/api/1.0/users/${username}/hoaxes`
-    : '/api/1.0/hoaxes';
+    ? `/api/1.0/users/${username}/msg`
+    : '/api/1.0/msg';
   const path = `${basePath}/${MessageId}?direction=before&page=0&size=5&sort=id,desc`;
   return axios.get(path);
 };
 
 export const loadNewMessages = (MessageId, username) => {
   const basePath = username
-    ? `/api/1.0/users/${username}/hoaxes`
-    : '/api/1.0/hoaxes';
+    ? `/api/1.0/users/${username}/msg`
+    : '/api/1.0/msg';
   const path = `${basePath}/${MessageId}?direction=after&sort=id,desc`;
   return axios.get(path);
 };
 
 export const loadNewMessageCount = (MessageId, username) => {
   const basePath = username
-    ? `/api/1.0/users/${username}/hoaxes`
-    : '/api/1.0/hoaxes';
+    ? `/api/1.0/users/${username}/msg`
+    : '/api/1.0/msg';
   const path = `${basePath}/${MessageId}?direction=after&count=true`;
   return axios.get(path);
 };
 
 export const deleteMessage = (MessageId) => {
-  return axios.delete('/api/1.0/hoaxes/' + hoaxId);
+  return axios.delete('/api/1.0/msg/' + MessageId);
 };
