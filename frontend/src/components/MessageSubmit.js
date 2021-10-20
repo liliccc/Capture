@@ -41,7 +41,7 @@ class MessageSubmit extends Component {
     };
     this.setState({ pendingApiCall: true });
     apiCalls
-      .postHoax(body)
+      .postMessage(body)
       .then((response) => {
         this.resetState();
       })

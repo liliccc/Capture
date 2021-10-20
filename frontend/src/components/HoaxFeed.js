@@ -9,9 +9,9 @@ const HoaxFeed = (props) => {
   const [isLoadingMessages, setLoadingMessages] = useState(false);
   const [isLoadingOldMessages, setLoadingOldMessages] = useState(false);
   const [isLoadingNewMessages, setLoadingNewMessages] = useState(false);
-  const [isDeletingHoax, setDeletingHoax] = useState(false);
-  const [newHoaxCount, setNewHoaxCount] = useState(0);
-  const [hoaxToBeDeleted, setHoaxToBeDeleted] = useState();
+  const [isDeletingMessage, setDeletingMessage] = useState(false);
+  const [newMessageCount, setNewMessageCount] = useState(0);
+  const [MessageToBeDeleted, setMessageToBeDeleted] = useState();
 
   useEffect(() => {
     const loadMessages = () => {
@@ -27,12 +27,12 @@ const HoaxFeed = (props) => {
   useEffect(() => {
     const checkCount = () => {
       const Messages = page.content;
-      let topHoaxId = 0;
+      let topMessageId = 0;
       if (Messages.length > 0) {
-        topHoaxId = Messages[0].id;
+        topMessageId = Messages[0].id;
       }
-      apiCalls.loadNewHoaxCount(topHoaxId, props.user).then((response) => {
-        setNewHoaxCount(response.data.count);
+      apiCalls.loadNewMessageCount(topMessageId, props.user).then((response) => {
+        setNewMessageCount(response.data.count);
       });
     };
     const counter = setInterval(checkCount, 3000);
@@ -49,10 +49,10 @@ const HoaxFeed = (props) => {
     if (Messages.length === 0) {
       return;
     }
-    const hoaxAtBottom = Messages[Messages.length - 1];
+    const MessageAtBottom = Messages[Messages.length - 1];
     setLoadingOldMessages(true);
     apiCalls
-      .loadOldMessages(hoaxAtBottom.id, props.user)
+      .loadOldMessages(MessageAtBottom.id, props.user)
       .then((response) => {
         setPage((previousPage) => ({
           ...previousPage,
@@ -71,20 +71,20 @@ const HoaxFeed = (props) => {
       return;
     }
     const Messages = page.content;
-    let topHoaxId = 0;
+    let topMessageId = 0;
     if (Messages.length > 0) {
-      topHoaxId = Messages[0].id;
+      topMessageId = Messages[0].id;
     }
     setLoadingNewMessages(true);
     apiCalls
-      .loadNewMessages(topHoaxId, props.user)
+      .loadNewMessages(topMessageId, props.user)
       .then((response) => {
         setPage((previousPage) => ({
           ...previousPage,
           content: [...response.data, ...previousPage.content],
         }));
         setLoadingNewMessages(false);
-        setNewHoaxCount(0);
+        setNewMessageCount(0);
       })
       .catch((error) => {
         setLoadingNewMessages(false);
@@ -92,34 +92,34 @@ const HoaxFeed = (props) => {
   };
 
   const onClickModalOk = () => {
-    setDeletingHoax(true);
-    apiCalls.deleteHoax(hoaxToBeDeleted.id).then((response) => {
+    setDeletingMessage(true);
+    apiCalls.deleteMessage(MessageToBeDeleted.id).then((response) => {
       setPage((previousPage) => ({
         ...previousPage,
         content: previousPage.content.filter(
-          (hoax) => hoax.id !== hoaxToBeDeleted.id
+          (Message) => Message.id !== MessageToBeDeleted.id
         ),
       }));
-      setDeletingHoax(false);
-      setHoaxToBeDeleted();
+      setDeletingMessage(false);
+      setMessageToBeDeleted();
     });
   };
 
   if (isLoadingMessages) {
     return <Spinner />;
   }
-  if (page.content.length === 0 && newHoaxCount === 0) {
+  if (page.content.length === 0 && newMessageCount === 0) {
     return (
       <div className="card card-header text-center">There are no Messages</div>
     );
   }
-  const newHoaxCountMessage =
-    newHoaxCount === 1
-      ? 'There is 1 new hoax'
-      : `There are ${newHoaxCount} new Messages`;
+  const newMessageCountMessage =
+    newMessageCount === 1
+      ? 'There is 1 new Message'
+      : `There are ${newMessageCount} new Messages`;
   return (
     <div>
-      {newHoaxCount > 0 && (
+      {newMessageCount > 0 && (
         <div
           className="card card-header text-center"
           onClick={onClickLoadNew}
@@ -127,15 +127,15 @@ const HoaxFeed = (props) => {
             cursor: isLoadingNewMessages ? 'not-allowed' : 'pointer',
           }}
         >
-          {isLoadingNewMessages ? <Spinner /> : newHoaxCountMessage}
+          {isLoadingNewMessages ? <Spinner /> : newMessageCountMessage}
         </div>
       )}
-      {page.content.map((hoax) => {
+      {page.content.map((Message) => {
         return (
           <MessageContainer
-            key={hoax.id}
-            message={hoax}
-            onClickDelete={() => setHoaxToBeDeleted(hoax)}
+            key={Message.id}
+            message={Message}
+            onClickDelete={() => setMessageToBeDeleted(Message)}
           />
         );
       })}
@@ -151,16 +151,16 @@ const HoaxFeed = (props) => {
         </div>
       )}
       <Modal
-        visible={hoaxToBeDeleted && true}
-        onClickCancel={() => setHoaxToBeDeleted()}
+        visible={MessageToBeDeleted && true}
+        onClickCancel={() => setMessageToBeDeleted()}
         body={
-          hoaxToBeDeleted &&
-          `Are you sure to delete '${hoaxToBeDeleted.content}'?`
+          MessageToBeDeleted &&
+          `Are you sure to delete '${MessageToBeDeleted.content}'?`
         }
         title="Delete!"
-        okButton="Delete Hoax"
+        okButton="Delete Message"
         onClickOk={onClickModalOk}
-        pendingApiCall={isDeletingHoax}
+        pendingApiCall={isDeletingMessage}
       />
     </div>
   );
