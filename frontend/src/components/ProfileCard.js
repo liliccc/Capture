@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileImageWithDefault from './ProfileImageWithDefault';
+import ProfileImage from './ProfileImage';
 import Input from './Input';
 import ButtonWithProgress from './ButtonWithProgress';
 
@@ -11,7 +11,7 @@ const ProfileCard = (props) => {
   return (
     <div className="card">
       <div className="card-header text-center">
-        <ProfileImageWithDefault
+        <ProfileImage
           alt="profile"
           width="200"
           height="200"

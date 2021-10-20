@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ProfileImageWithDefault from './ProfileImageWithDefault';
+import ProfileImage from './ProfileImage';
 import useClickTracker from '../shared/useClickTracker';
 
 const TopBar = (props) => {
@@ -28,10 +28,7 @@ const TopBar = (props) => {
       <ul className="nav navbar-nav ml-auto" ref={actionArea}>
         <li className="nav-item dropdown">
           <div className="d-flex" style={{ cursor: 'pointer' }}>
-            <ProfileImageWithDefault
-              className="rounded-circle m-auto"
-              width="32"
-              height="32"
+            <ProfileImage
               image={props.user.image}
             />
             <span className="nav-link dropdown-toggle">

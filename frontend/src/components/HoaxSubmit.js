@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ProfileImageWithDefault from './ProfileImageWithDefault';
+import ProfileImage from './ProfileImage';
 import { connect } from 'react-redux';
 import * as apiCalls from '../api/apiCalls';
 import ButtonWithProgress from './ButtonWithProgress';
@@ -94,7 +94,7 @@ class HoaxSubmit extends Component {
     }
     return (
       <div className="card d-flex flex-row p-1">
-        <ProfileImageWithDefault
+        <ProfileImage
           className="rounded-circle m-1"
           width="32"
           height="32"

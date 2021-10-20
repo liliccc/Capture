@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import * as apiCalls from '../api/apiCalls';
 import UserListItem from './UserListItem';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
@@ -46,7 +45,7 @@ const UserList = (props) => {
   return (
     <Card>
       <CardContent>
-        <h3 style={{ marginLeft: 120, color: '#0984e3' }}>Users</h3>
+        <h3 style={{ marginLeft: 120, color: '#00b894' }}>Users</h3>
         <List data-testid="usergroup">
           {content.map((user) => {
             return <UserListItem key={user.username} user={user} />;
@@ -57,7 +56,11 @@ const UserList = (props) => {
         {!first && (
           <Button
             variant="contained"
-            style={{ marginLeft: 20, marginBottom: 20 }}
+            style={{
+              marginLeft: 20,
+              marginBottom: 20,
+              backgroundColor: '#00b894',
+            }}
             onClick={onClickPrevious}
           >{`< previous`}</Button>
         )}
@@ -65,7 +68,7 @@ const UserList = (props) => {
         {!last && (
           <Button
             variant="contained"
-            style={{ marginLeft: 110, marginBottom: 20 }}
+            style={{ marginLeft: 110, marginBottom: 20, backgroundColor: '#00b894',}}
             onClick={onClickNext}
           >
             {`next >`}

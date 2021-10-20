@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import ProfileImageWithDefault from './ProfileImageWithDefault';
+import ProfileImage from './ProfileImage';
 import { format } from 'timeago.js';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -25,7 +25,7 @@ const HoaxView = (props) => {
   return (
     <div className="card p-1">
       <div className="d-flex">
-        <ProfileImageWithDefault
+        <ProfileImage
           className="rounded-circle m-1"
           width="32"
           height="32"
