@@ -13,12 +13,14 @@ const UserListItem = (props) => {
       <ListItemButton>
         <Link
           to={`/${props.user.username}`}
-          className="list-group-item list-group-item-action"
+          className="list-group-item  list-group-item-action"
         >
-          <ListItemIcon>
-            <ProfileImage image={props.user.image} />
-          </ListItemIcon>
-          <ListItemText>{`${props.user.displayName}@${props.user.username}`}</ListItemText>
+          <div className="row">
+            <ListItemIcon>
+              <ProfileImage image={props.user.image} />
+            </ListItemIcon>
+            <ListItemText>{`${props.user.displayName}@${props.user.username}`}</ListItemText>
+          </div>
         </Link>
       </ListItemButton>
     </ListItem>

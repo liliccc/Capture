@@ -47,7 +47,7 @@ const UserList = (props) => {
     <Card>
       <CardContent>
         <h3 style={{ marginLeft: 120, color: '#0984e3' }}>Users</h3>
-        <List data-testid="usergroup" style={{}}>
+        <List data-testid="usergroup">
           {content.map((user) => {
             return <UserListItem key={user.username} user={user} />;
           })}
