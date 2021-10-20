@@ -10,9 +10,9 @@ spring:
 #        web-allow-others: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/capture
-    username: postgres
-    password: admin
+#    url: jdbc:postgresql://localhost:5432/capture
+#    username: postgres
+#    password: admin
   jpa:
     properties:
       javax:
@@ -21,8 +21,8 @@ spring:
             mode: none
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-    hibernate:
-      ddl-auto: create # When you launch the application for the first time - switch "none" at "create"
+#    hibernate:
+#      ddl-auto: create # When you launch the application for the first time - switch "none" at "create"
     show-sql: true
     database: postgresql
     open-in-view: false
@@ -36,7 +36,7 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:h2:./hoaxify-prod
+    url: jdbc:h2:./capure-prod
     username: sa
   jpa:
     hibernate:
@@ -48,7 +48,7 @@ spring:
 spring:
   profiles: dev
 #  datasource:
-#    url: jdbc:h2:mem:hoaxify-dev
+#    url: jdbc:h2:mem:capture-dev
 ---
 spring:
   profiles: test
