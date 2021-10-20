@@ -21,11 +21,11 @@ public class CaptureApplication {
 	@Profile("dev")
 	CommandLineRunner run(UserService userService) {
 		return (args) -> {
-			IntStream.rangeClosed(1,15)
+			IntStream.rangeClosed(1,20)
 				.mapToObj(i -> {
 					Users user = new Users();
-					user.setUsername("user"+i);
-					user.setDisplayName("display"+i);
+					user.setUsername("TestUser"+i);
+					user.setDisplayName("TestUser"+i);
 					user.setPassword("P4ssword");
 					return user;
 				})

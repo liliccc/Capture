@@ -1,24 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ProfileImageWithDefault from './ProfileImageWithDefault';
+import ProfileImage from './ProfileImageWithDefault';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
 
 const UserListItem = (props) => {
   return (
-    <Link
-      to={`/${props.user.username}`}
-      className="list-group-item list-group-item-action"
-    >
-      <ProfileImageWithDefault
-        className="rounded-circle"
-        alt="profile"
-        width="32"
-        height="32"
-        image={props.user.image}
-      />
-      <span className="pl-2">{`${props.user.displayName}@${
-        props.user.username
-      }`}</span>
-    </Link>
+    <ListItem disablePadding>
+      <ListItemButton>
+        <Link
+          to={`/${props.user.username}`}
+          className="list-group-item list-group-item-action"
+        >
+          <ListItemIcon>
+            <ProfileImage image={props.user.image} />
+          </ListItemIcon>
+          <ListItemText>{`${props.user.displayName}@${props.user.username}`}</ListItemText>
+        </Link>
+      </ListItemButton>
+    </ListItem>
   );
 };
 

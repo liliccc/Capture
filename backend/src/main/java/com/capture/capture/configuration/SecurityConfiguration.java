@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
-	
+
 	@Autowired
 	AuthUserService authUserService;
 	
@@ -25,7 +25,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		
 		http.headers().disable();
 
-		http.httpBasic().authenticationEntryPoint(new BasicAuthenticationEntryPoint());
+		http.httpBasic().authenticationEntryPoint(new Base64AuthEntryPoint());
 		
 		http
 			.authorizeRequests()

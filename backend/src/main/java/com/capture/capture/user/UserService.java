@@ -20,9 +20,9 @@ public class UserService {
 		this.passwordEncoder = passwordEncoder;
 	}
 	
-	public Users save(Users user) {
+	public void save(Users user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userRepository.save(user);
+		userRepository.save(user);
 	}
 
 	public Page<Users> getUsers(Users loggedInUser, Pageable pageable) {

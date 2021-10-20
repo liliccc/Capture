@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import * as apiCalls from '../api/apiCalls';
 import UserListItem from './UserListItem';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import Snackbar from '@mui/material/Snackbar';
 
 const UserList = (props) => {
   const [page, setPage] = useState({
     content: [],
     number: 0,
-    size: 3
+    size: 9
   });
 
   const [loadError, setLoadError] = useState();
@@ -17,7 +23,7 @@ const UserList = (props) => {
 
   const loadData = (requestedPage = 0) => {
     apiCalls
-      .listUsers({ page: requestedPage, size: 3 })
+      .listUsers({ page: requestedPage, size: 8 })
       .then((response) => {
         setPage(response.data);
         setLoadError();
@@ -38,35 +44,36 @@ const UserList = (props) => {
   const { content, first, last } = page;
 
   return (
-    <div className="card">
-      <h3 className="card-title m-auto">Users</h3>
-      <div className="list-group list-group-flush" data-testid="usergroup">
-        {content.map((user) => {
-          return <UserListItem key={user.username} user={user} />;
-        })}
-      </div>
-      <div className="clearfix">
+    <Card>
+      <CardContent>
+        <h3 style={{ marginLeft: 120, color: '#0984e3' }}>Users</h3>
+        <List data-testid="usergroup" style={{}}>
+          {content.map((user) => {
+            return <UserListItem key={user.username} user={user} />;
+          })}
+        </List>
+      </CardContent>
+      <div>
         {!first && (
-          <span
-            className="badge badge-light float-left"
-            style={{ cursor: 'pointer' }}
+          <Button
+            variant="contained"
+            style={{ marginLeft: 20, marginBottom: 20 }}
             onClick={onClickPrevious}
-          >{`< previous`}</span>
+          >{`< previous`}</Button>
         )}
+
         {!last && (
-          <span
-            className="badge badge-light float-right"
-            style={{ cursor: 'pointer' }}
+          <Button
+            variant="contained"
+            style={{ marginLeft: 110, marginBottom: 20 }}
             onClick={onClickNext}
           >
-            next >
-          </span>
+            {`next >`}
+          </Button>
         )}
       </div>
-      {loadError && (
-        <span className="text-center text-danger">{loadError}</span>
-      )}
-    </div>
+      {loadError && <Snackbar>{loadError}</Snackbar>}
+    </Card>
   );
 };
 

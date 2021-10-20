@@ -31,23 +31,23 @@ public class Users implements UserDetails{
 	@GeneratedValue
 	private long id;
 	
-	@NotNull(message = "{hoaxify.constraints.username.NotNull.message}")
-	@Size(min = 4, max=255)
+	@NotNull(message = "{capture.constraints.username.NotNull.message}")
+	@Size(min = 4, max=80)
 	@UniqueUsername
 	private String username;
 	
 	@NotNull
-	@Size(min = 4, max=255)
+	@Size(min = 4, max=80)
 	private String displayName;
 	
 	@NotNull
-	@Size(min = 8, max=255)
+	@Size(min = 4, max=80)
 	private String password;
 	
 	private String image;
 	
 	@OneToMany(mappedBy = "user")
-	private List<Message> hoaxes;
+	private List<Message> messages;
 
 	@Override
 	@Transient

@@ -1,14 +1,15 @@
 import React from 'react';
 import defaultPicture from '../assets/profile.png';
+import Avatar from '@mui/material/Avatar';
 
-const ProfileImageWithDefault = (props) => {
+const ProfileImage = (props) => {
   let imageSource = defaultPicture;
   if (props.image) {
     imageSource = `/images/profile/${props.image}`;
   }
   return (
     //eslint-disable-next-line
-    <img
+    <Avatar
       {...props}
       src={props.src || imageSource}
       onError={(event) => {
@@ -18,4 +19,4 @@ const ProfileImageWithDefault = (props) => {
   );
 };
 
-export default ProfileImageWithDefault;
+export default ProfileImage;

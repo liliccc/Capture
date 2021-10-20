@@ -1,25 +1,26 @@
 package com.capture.capture.message;
 
 import com.capture.capture.user.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class MessageSecurityService {
+	@Autowired
+	MessageRepository messageRepository;
 	
-	MessageRepository hoaxRepository;
-	
-	public MessageSecurityService(MessageRepository hoaxRepository) {
+	public MessageSecurityService(MessageRepository messageRepository) {
 		super();
-		this.hoaxRepository = hoaxRepository;
+		this.messageRepository = messageRepository;
 	}
 
 	public boolean isAllowedToDelete(long hoaxId, Users loggedInUser) {
-		Optional<Message> optionalHoax = hoaxRepository.findById(hoaxId);
-		if(optionalHoax.isPresent()) {
-			Message inDB = optionalHoax.get();
-			return inDB.getUser().getId() == loggedInUser.getId();
+		Optional<Message> optionalMessage = messageRepository.findById(hoaxId);
+		if(optionalMessage.isPresent()) {
+			Message message = optionalMessage.get();
+			return message.getUser().getId() == loggedInUser.getId();
 		}
 		return false;
 	}

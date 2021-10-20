@@ -1,13 +1,12 @@
 package com.capture.capture.configuration;
 
+import com.capture.capture.user.UserRepository;
+import com.capture.capture.user.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import com.capture.capture.user.Users;
-import com.capture.capture.user.UserRepository;
 
 @Service
 public class AuthUserService implements UserDetailsService {

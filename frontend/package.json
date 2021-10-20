@@ -41,7 +41,7 @@
     "@testing-library/react": "^11.2.2",
     "redux-logger": "^3.0.6"
   },
-  "proxy": "http://api:8080",
+  "proxy": "http://localhost:8080",
   "jest": {
     "resetMocks": false
   }

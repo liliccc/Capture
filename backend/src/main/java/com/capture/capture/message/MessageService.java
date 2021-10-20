@@ -2,6 +2,7 @@ package com.capture.capture.message;
 
 import com.capture.capture.user.UserService;
 import com.capture.capture.user.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,82 +13,74 @@ import java.util.List;
 
 @Service
 public class MessageService {
-
-    MessageRepository hoaxRepository;
+    @Autowired
+    MessageRepository messageRepository;
 
     UserService userService;
 
-    public MessageService(MessageRepository hoaxRepository, UserService userService) {
+    public MessageService(MessageRepository messageRepository, UserService userService) {
         super();
-        this.hoaxRepository = hoaxRepository;
+        this.messageRepository = messageRepository;
         this.userService = userService;
     }
 
-    public Message save(Users user, Message hoax) {
-        hoax.setTimestamp(new Date());
-        hoax.setUser(user);
-        return hoaxRepository.save(hoax);
+    public Message save(Users user, Message message) {
+        message.setTimestamp(new Date());
+        message.setUser(user);
+        return messageRepository.save(message);
     }
 
-    public Page<Message> getAllHoaxes(Pageable pageable) {
-        return hoaxRepository.findAll(pageable);
+    public Page<Message> getAllMessages(Pageable pageable) {
+        return messageRepository.findAll(pageable);
     }
 
-    public Page<Message> getHoaxesOfUser(String username, Pageable pageable) {
-        Users inDB = userService.getByUsername(username);
-        return hoaxRepository.findByUser(inDB, pageable);
+    public Page<Message> getMessagesOfUser(String username, Pageable pageable) {
+        Users user = userService.getByUsername(username);
+        return messageRepository.findByUser(user, pageable);
     }
 
-    public Page<Message> getOldHoaxes(long id, String username, Pageable pageable) {
-        Specification<Message> spec = Specification.where(idLessThan(id));
+    public Page<Message> getOldMessages(long id, String username, Pageable pageable) {
+        Specification<Message> messageSpecification = Specification.where(idLessThan(id));
         if (username != null) {
-            Users inDB = userService.getByUsername(username);
-            spec = spec.and(userIs(inDB));
+            Users user = userService.getByUsername(username);
+            messageSpecification = messageSpecification.and(userIs(user));
         }
-        return hoaxRepository.findAll(spec, pageable);
+        return messageRepository.findAll(messageSpecification, pageable);
     }
 
 
-    public List<Message> getNewHoaxes(long id, String username, Pageable pageable) {
+    public List<Message> getNewMessages(long id, String username, Pageable pageable) {
         Specification<Message> spec = Specification.where(idGreaterThan(id));
         if (username != null) {
             Users inDB = userService.getByUsername(username);
             spec = spec.and(userIs(inDB));
         }
-        return hoaxRepository.findAll(spec, pageable.getSort());
+        return messageRepository.findAll(spec, pageable.getSort());
     }
 
-    public long getNewHoaxesCount(long id, String username) {
+    public long getNewMessagesCount(long id, String username) {
         Specification<Message> spec = Specification.where(idGreaterThan(id));
         if (username != null) {
             Users inDB = userService.getByUsername(username);
             spec = spec.and(userIs(inDB));
         }
-        return hoaxRepository.count(spec);
+        return messageRepository.count(spec);
     }
 
     private Specification<Message> userIs(Users user) {
-        return (root, query, criteriaBuilder) -> {
-            return criteriaBuilder.equal(root.get("user"), user);
-        };
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("user"), user);
     }
 
     private Specification<Message> idLessThan(long id) {
-        return (root, query, criteriaBuilder) -> {
-            return criteriaBuilder.lessThan(root.get("id"), id);
-        };
+        return (root, query, criteriaBuilder) -> criteriaBuilder.lessThan(root.get("id"), id);
     }
 
     private Specification<Message> idGreaterThan(long id) {
-        return (root, query, criteriaBuilder) -> {
-            return criteriaBuilder.greaterThan(root.get("id"), id);
-        };
+        return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThan(root.get("id"), id);
     }
 
-    public void deleteHoax(long id) {
-        Message hoax = hoaxRepository.getOne(id);
-        hoaxRepository.deleteById(id);
-
+    public void deleteMessage(long id) {
+        messageRepository.deleteById(id);
     }
 
 
