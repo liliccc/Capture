@@ -2,7 +2,7 @@ import React from 'react';
 import UserList from '../components/UserList';
 import MessageSubmit from '../components/MessageSubmit';
 import { connect } from 'react-redux';
-import MessagesPage from '../components/HoaxFeed';
+import MessagesPage from '../components/MessagesPage';
 
 class HomePage extends React.Component {
   
