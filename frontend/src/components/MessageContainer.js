@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import useClickTracker from '../shared/useClickTracker';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const MessageContainer = (props) => {
   const actionArea = useRef();
@@ -42,20 +44,19 @@ const MessageContainer = (props) => {
             <span style={{ color: '#00b894' }}>{relativeDate}</span>
           </div>
           {ownedByLoggedInUser && (
-            <div className="dropdown">
+            <div>
               <span
-                className="btn btn-sm btn-light dropdown-toggle"
                 data-testid="message-actions"
                 ref={actionArea}
               />
-              <div className={dropDownClass} data-testid="message-action-dropdown">
-                <button
-                  className="btn btn-outline-danger btn-sm btn-block text-left"
-                  onClick={onClickDelete}
-                >
-                  <i className="far fa-trash-alt" /> Delete
-                </button>
-              </div>
+              <IconButton
+                style={{marginTop: -7}}
+                variant="contained"
+                aria-label="delete"
+                onClick={onClickDelete}
+              >
+                <DeleteIcon />
+              </IconButton>
             </div>
           )}
         </div>

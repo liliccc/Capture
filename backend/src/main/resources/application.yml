@@ -10,9 +10,9 @@ spring:
 #        web-allow-others: true
   datasource:
     driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/capture
-#    username: postgres
-#    password: admin
+    url: jdbc:postgresql://localhost:5432/capture
+    username: postgres
+    password: admin
   jpa:
     properties:
       javax:
