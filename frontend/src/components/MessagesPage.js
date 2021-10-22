@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import * as apiCalls from '../api/apiCalls';
 import Spinner from './Spinner';
 import MessageContainer from './MessageContainer';
-import Modal from './Modal';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 const MessagesPage = (props) => {
   const [page, setPage] = useState({ content: [] });
@@ -91,7 +96,7 @@ const MessagesPage = (props) => {
       });
   };
 
-  const onClickModalOk = () => {
+  const deleteMessage = () => {
     setDeletingMessage(true);
     apiCalls.deleteMessage(MessageToBeDeleted.id).then((response) => {
       setPage((previousPage) => ({
@@ -105,12 +110,17 @@ const MessagesPage = (props) => {
     });
   };
 
+  const handleClose = () => {
+    setDeletingMessage(false);
+    setMessageToBeDeleted();
+  };
+
   if (isLoadingMessages) {
     return <Spinner />;
   }
   if (page.content.length === 0 && newMessageCount === 0) {
     return (
-      <div className="card card-header text-center">There are no Messages</div>
+      <div className="card card-header text-center" style={{color: '#00b894'}}>There are no Messages</div>
     );
   }
   const newMessageCountMessage =
@@ -125,6 +135,7 @@ const MessagesPage = (props) => {
           onClick={onClickLoadNew}
           style={{
             cursor: isLoadingNewMessages ? 'not-allowed' : 'pointer',
+            color: '#00b894',
           }}
         >
           {isLoadingNewMessages ? <Spinner /> : newMessageCountMessage}
@@ -150,18 +161,36 @@ const MessagesPage = (props) => {
           {isLoadingOldMessages ? <Spinner /> : 'Load More'}
         </div>
       )}
-      <Modal
-        visible={MessageToBeDeleted && true}
-        onClickCancel={() => setMessageToBeDeleted()}
-        body={
-          MessageToBeDeleted &&
-          `Are you sure to delete '${MessageToBeDeleted.content}'?`
-        }
-        title="Delete!"
-        okButton="Delete Message"
-        onClickOk={onClickModalOk}
-        pendingApiCall={isDeletingMessage}
-      />
+      <Dialog
+        open={MessageToBeDeleted && true}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle>{'Delete!'}</DialogTitle>
+        <DialogContent style={{ padding: 20 }}>
+          <DialogContentText>
+            {MessageToBeDeleted &&
+              `Are you sure to delete '${MessageToBeDeleted.content}'?`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions style={{ padding: 20 }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            autoFocus
+            onClick={handleClose}
+          >
+            Disagree
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={deleteMessage}
+            autoFocus
+          >
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
