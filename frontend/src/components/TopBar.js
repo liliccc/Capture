@@ -13,14 +13,14 @@ const TopBar = (props) => {
   const dropDownVisible = useClickTracker(actionArea);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const openDrawerNavigation = (event) => {
     if (anchorEl == null) {
       setAnchorEl(event.currentTarget);
     } else {
       setAnchorEl(null);
     }
   };
-  const handleClose = () => {
+  const closeDrawerNavigation = () => {
     setAnchorEl(null);
   };
 
@@ -43,7 +43,7 @@ const TopBar = (props) => {
         aria-controls="basic-menu"
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
+        onClick={openDrawerNavigation}
         style={{ marginLeft: 700 }}
         ref={actionArea}
       >
@@ -55,7 +55,7 @@ const TopBar = (props) => {
           id="basic-menu"
           anchorEl={anchorEl}
           open={open}
-          onClose={handleClose}
+          onClose={closeDrawerNavigation}
           MenuListProps={{
             'aria-labelledby': 'basic-button',
           }}

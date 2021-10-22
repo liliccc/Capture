@@ -1,13 +1,13 @@
 import React from 'react';
 
 const Input = (props) => {
-  let inputClassName = 'form-control';
+  let isInputStretch = 'form-control';
 
   if (props.type === 'file') {
-    inputClassName += '-file';
+    isInputStretch += '-file';
   }
   if (props.hasError !== undefined) {
-    inputClassName += props.hasError ? ' is-invalid' : ' is-valid';
+    isInputStretch += props.hasError ? ' is-invalid' : ' is-valid';
   }
 
   return (
@@ -15,7 +15,7 @@ const Input = (props) => {
       {props.label && <label>{props.label}</label>}
       <input
         name={props.name}
-        className={inputClassName}
+        className={isInputStretch}
         type={props.type || 'text'}
         placeholder={props.placeholder}
         value={props.value}
